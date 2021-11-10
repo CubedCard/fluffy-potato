@@ -21,27 +21,26 @@ public class Stream {
     private double weight;
     private String description;
     private String name;
-    private Date day;
-    private int dayOfTheWeek;
-    private long startTime;
-    private long endTime;
+    private List<Day> days;
     private Range postalCodeRange;
 
     public Stream(int stream_product_id, List<Container> sizes, String type, double weight, String description,
-                  String name, Date day, Range postalCodeRange) {
+                  String name, Date[] dates, Range postalCodeRange) {
         this.stream_product_id = stream_product_id;
         this.sizes = sizes;
         this.type = type;
         this.weight = weight;
         this.description = description;
         this.name = name;
-        this.day = day;
-        Calendar c = Calendar.getInstance();
-        c.setTime(day);
-        this.dayOfTheWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
-        this.startTime = c.get(Calendar.HOUR_OF_DAY);
-        this.endTime = this.startTime + 2;
+        this.days = new ArrayList<>();
+        this.addDatesToDays(dates);
         this.postalCodeRange = postalCodeRange;
+    }
+
+    private void addDatesToDays(Date[] dates) {
+        for (Date date: dates) {
+            this.days.add(new Day(date));
+        }
     }
 
     public static Stream createRandomStream() {
@@ -84,17 +83,9 @@ public class Stream {
                 Math.floor(Math.random() * 100),
                 descriptions[(int) Math.floor(Math.random() * descriptions.length)],
                 names[(int) Math.floor(Math.random() * names.length)],
-                date,
+                new Date[]{date},
                 new Range((int) Math.floor(Math.random() * 1500) + 1000, (int) Math.floor(Math.random() * 1500 + 1100))
         );
-    }
-
-    public static int getIdentifier() {
-        return identifier;
-    }
-
-    public static void setIdentifier(int identifier) {
-        Stream.identifier = identifier;
     }
 
     public int getStream_product_id() {
@@ -145,36 +136,12 @@ public class Stream {
         this.name = name;
     }
 
-    public Date getDay() {
-        return day;
+    public List<Day> getDays() {
+        return days;
     }
 
-    public void setDay(Date day) {
-        this.day = day;
-    }
-
-    public int getDayOfTheWeek() {
-        return dayOfTheWeek;
-    }
-
-    public void setDayOfTheWeek(int dayOfTheWeek) {
-        this.dayOfTheWeek = dayOfTheWeek;
-    }
-
-    public long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
-    }
-
-    public long getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
+    public void setDays(List<Day> days) {
+        this.days = days;
     }
 
     public Range getPostalCodeRange() {
