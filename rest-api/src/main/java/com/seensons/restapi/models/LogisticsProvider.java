@@ -2,6 +2,9 @@ package com.seensons.restapi.models;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * This class <description of functionality>
  *
@@ -11,11 +14,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document("LogisticsProviders")
 public class LogisticsProvider {
     private String name;
-    private Stream stream;
+    private List<Stream> stream;
 
     public LogisticsProvider(String name) {
         this.name = name;
-        this.stream = Stream.createRandomStream();
+        this.stream = new ArrayList<>();
+        for (int i = 0; i < (int) Math.floor(Math.random() * 3) + 1; i++) {
+            this.stream.add(Stream.createRandomStream());
+        }
     }
 
     public static LogisticsProvider createRandomLogisticsProvider() {
@@ -36,11 +42,11 @@ public class LogisticsProvider {
         this.name = name;
     }
 
-    public Stream getStream() {
+    public List<Stream> getStream() {
         return stream;
     }
 
-    public void setStream(Stream stream) {
+    public void setStream(List<Stream> stream) {
         this.stream = stream;
     }
 }

@@ -39,7 +39,7 @@ public class Stream {
         Calendar c = Calendar.getInstance();
         c.setTime(day);
         this.dayOfTheWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
-        this.startTime = day.getTime();
+        this.startTime = c.get(Calendar.HOUR_OF_DAY);
         this.endTime = this.startTime + 2;
         this.postalCodeRange = postalCodeRange;
     }
@@ -76,6 +76,7 @@ public class Stream {
                 "Confidential paper"
         };
         Date date = new GregorianCalendar(2021, Calendar.NOVEMBER, (int) Math.floor(Math.random() * 30)).getTime();
+        date.setHours((int) Math.floor(Math.random() * 10) + 8);
         return new Stream(
                 Stream.identifier++,
                 randomContainers,
@@ -84,7 +85,7 @@ public class Stream {
                 descriptions[(int) Math.floor(Math.random() * descriptions.length)],
                 names[(int) Math.floor(Math.random() * names.length)],
                 date,
-                new Range((int) Math.floor(Math.random() * 1500), (int) Math.floor(Math.random() * 1500 + 100))
+                new Range((int) Math.floor(Math.random() * 1500) + 1000, (int) Math.floor(Math.random() * 1500 + 1100))
         );
     }
 
