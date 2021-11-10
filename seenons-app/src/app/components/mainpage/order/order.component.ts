@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {OrderService} from "../../../services/order.service";
+import {Container} from "../../../models/container";
 
 @Component({
   selector: 'app-order',
@@ -7,17 +8,16 @@ import {OrderService} from "../../../services/order.service";
   styleUrls: ['./order.component.css']
 })
 export class OrderComponent implements OnInit {
+  containers: Container[];
 
-  constructor(private service: OrderService) { }
+  constructor(private service: OrderService) {
+    this.containers = this.service.containers;
+  }
 
   ngOnInit(): void {
   }
 
-  fetchAll() {
-    this.service.fetch(-1);
-  }
-
   fetchById(id: number) {
-    this.service.fetch(id)
+    this.service.fetchData(id)
   }
 }

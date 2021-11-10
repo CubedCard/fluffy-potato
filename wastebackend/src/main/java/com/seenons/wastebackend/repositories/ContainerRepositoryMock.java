@@ -12,9 +12,13 @@ import java.util.List;
  */
 public class ContainerRepositoryMock implements ContainerRepository {
   private final List<Container> containers;
+  public static int identifier = 1000;
 
   public ContainerRepositoryMock() {
     this.containers = new ArrayList<>();
+    for (int i = 0; i < 5; i++) {
+      this.containers.add(Container.createRandomContainer());
+    }
   }
 
   @Override
