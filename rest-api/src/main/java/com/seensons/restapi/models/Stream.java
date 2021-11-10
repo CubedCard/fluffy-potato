@@ -3,8 +3,7 @@ package com.seensons.restapi.models;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.persistence.Id;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * This class <description of functionality>
@@ -22,14 +21,27 @@ public class Stream {
     private double weight;
     private String description;
     private String name;
+    private Date day;
+    private int dayOfTheWeek;
+    private long startTime;
+    private long endTime;
+    private Range postalCodeRange;
 
-    public Stream(int stream_product_id, List<Container> sizes, String type, double weight, String description, String name) {
+    public Stream(int stream_product_id, List<Container> sizes, String type, double weight, String description,
+                  String name, Date day, Range postalCodeRange) {
         this.stream_product_id = stream_product_id;
         this.sizes = sizes;
         this.type = type;
         this.weight = weight;
         this.description = description;
         this.name = name;
+        this.day = day;
+        Calendar c = Calendar.getInstance();
+        c.setTime(day);
+        this.dayOfTheWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
+        this.startTime = day.getTime();
+        this.endTime = this.startTime + 2;
+        this.postalCodeRange = postalCodeRange;
     }
 
     public static Stream createRandomStream() {
@@ -63,14 +75,25 @@ public class Stream {
                 "Swill",
                 "Confidential paper"
         };
+        Date date = new GregorianCalendar(2021, Calendar.NOVEMBER, (int) Math.floor(Math.random() * 30)).getTime();
         return new Stream(
                 Stream.identifier++,
                 randomContainers,
                 types[(int) Math.floor(Math.random() * types.length)],
                 Math.floor(Math.random() * 100),
                 descriptions[(int) Math.floor(Math.random() * descriptions.length)],
-                names[(int) Math.floor(Math.random() * names.length)]
+                names[(int) Math.floor(Math.random() * names.length)],
+                date,
+                new Range((int) Math.floor(Math.random() * 1500), (int) Math.floor(Math.random() * 1500 + 100))
         );
+    }
+
+    public static int getIdentifier() {
+        return identifier;
+    }
+
+    public static void setIdentifier(int identifier) {
+        Stream.identifier = identifier;
     }
 
     public int getStream_product_id() {
@@ -119,5 +142,45 @@ public class Stream {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getDay() {
+        return day;
+    }
+
+    public void setDay(Date day) {
+        this.day = day;
+    }
+
+    public int getDayOfTheWeek() {
+        return dayOfTheWeek;
+    }
+
+    public void setDayOfTheWeek(int dayOfTheWeek) {
+        this.dayOfTheWeek = dayOfTheWeek;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
+    }
+
+    public Range getPostalCodeRange() {
+        return postalCodeRange;
+    }
+
+    public void setPostalCodeRange(Range postalCodeRange) {
+        this.postalCodeRange = postalCodeRange;
     }
 }

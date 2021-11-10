@@ -3,10 +3,7 @@ package com.seensons.restapi.rest;
 import com.seensons.restapi.models.Container;
 import com.seensons.restapi.repositories.ContainerRepositoryMock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,9 +29,9 @@ public class ContainerController {
         return this.repository.save(Container.createRandomContainer());
     }
 
-    @GetMapping("test")
-    public String getTest() {
-        return "Hi there";
+    @GetMapping("containers/{name}")
+    public List<Container> getContainerByName(@PathVariable String name) {
+        return this.repository.findItemByName(name);
     }
 
     @DeleteMapping("containers/delete")
