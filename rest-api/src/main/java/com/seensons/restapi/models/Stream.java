@@ -25,22 +25,15 @@ public class Stream {
     private Range postalCodeRange;
 
     public Stream(int stream_product_id, List<Container> sizes, String type, double weight, String description,
-                  String name, Date[] dates, Range postalCodeRange) {
+                  String name, List<Day> days, Range postalCodeRange) {
         this.stream_product_id = stream_product_id;
         this.sizes = sizes;
         this.type = type;
         this.weight = weight;
         this.description = description;
         this.name = name;
-        this.days = new ArrayList<>();
-        this.addDatesToDays(dates);
+        this.days = days;
         this.postalCodeRange = postalCodeRange;
-    }
-
-    private void addDatesToDays(Date[] dates) {
-        for (Date date: dates) {
-            this.days.add(new Day(date));
-        }
     }
 
     public static Stream createRandomStream() {
@@ -76,6 +69,8 @@ public class Stream {
         };
         Date date = new GregorianCalendar(2021, Calendar.NOVEMBER, (int) Math.floor(Math.random() * 30)).getTime();
         date.setHours((int) Math.floor(Math.random() * 10) + 8);
+        List<Day> days1 = new ArrayList<>();
+        days1.add(new Day(date));
         return new Stream(
                 Stream.identifier++,
                 randomContainers,
@@ -83,7 +78,7 @@ public class Stream {
                 Math.floor(Math.random() * 100),
                 descriptions[(int) Math.floor(Math.random() * descriptions.length)],
                 names[(int) Math.floor(Math.random() * names.length)],
-                new Date[]{date},
+                new ArrayList<>(days1),
                 new Range((int) Math.floor(Math.random() * 1500) + 1000, (int) Math.floor(Math.random() * 1500 + 1100))
         );
     }
