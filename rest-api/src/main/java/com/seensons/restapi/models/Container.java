@@ -54,9 +54,9 @@ public class Container {
         };
         return new Container(Container.identifier++, (int) Math.floor(Math.random() * 100 + 10),
                 types.get((int) Math.floor(Math.random() * 2)), randomImages.subList(0,
-                (int) (Math.random() * (randomImages.size() - 1))),
-                descriptions[(int) Math.floor(Math.random() * (descriptions.length - 1))],
-                names[(int) Math.floor(Math.random() * (names.length - 1))], Math.random() > 0.5);
+                (int) (Math.random() * (randomImages.size()))),
+                descriptions[(int) Math.floor(Math.random() * (descriptions.length))],
+                names[(int) Math.floor(Math.random() * (names.length))], Math.random() > 0.5);
     }
 
     public int getId() {

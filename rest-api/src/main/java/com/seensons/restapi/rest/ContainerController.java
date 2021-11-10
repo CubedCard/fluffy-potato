@@ -24,7 +24,7 @@ public class ContainerController {
         return this.repository.findAll();
     }
 
-    @PostMapping("containers/new")
+    @PostMapping("containers")
     public Container createContainer() {
         return this.repository.save(Container.createRandomContainer());
     }
@@ -34,7 +34,7 @@ public class ContainerController {
         return this.repository.findItemByName(name);
     }
 
-    @DeleteMapping("containers/delete")
+    @DeleteMapping("containers")
     private void deleteAllContainers() {
         this.repository.deleteAll();
     }
